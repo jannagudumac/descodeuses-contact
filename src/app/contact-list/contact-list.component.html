@@ -1,0 +1,40 @@
+<div class="flex flex-col h-full">
+    <div class="flex flex-row gap-2 m-2">
+        <div>
+            <mat-form-field class="w-100">
+                <!-- event (change) executé seulement quand on perd focus -->
+                <!-- event (keyup) executé seulement si saisi clavier -->
+                <!-- event (input) executé seulement si saisi clavier (sauf ENTER) -->
+                <input matInput placeholder="Rechercher.." [(ngModel)]="textRecherche" (input)="onSearch()">
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-mini-fab class="mt-2" [routerLink]="['/contact-detail']">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="flex-1">
+        <!-- B: Creer une liste material dans HTML qui affiche ce tableau-->
+        <mat-list role="list">
+            @for (item of listeContactFiltre; track item.id) {
+            <mat-list-item role="listitem">
+                <div class="flex items-center">
+                    <span 
+                class="cursor-pointer" 
+                    [routerLink]="['/contact-detail',item.id]">{{item.prenom}} {{item.nom}}</span>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>  
+                    <mat-menu #menu>
+                        <button mat-menu-item (click)="onDelete(item.id)">Supprimer</button>
+                    </mat-menu>                   
+                </div>      
+            </mat-list-item>
+            }
+        </mat-list>
+    </div>
+    <div class="text-center text-gray-500 pb-2">
+        Nombre: {{countContacts}}
+    </div>
+</div>
