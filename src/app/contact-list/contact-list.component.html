@@ -22,16 +22,20 @@
                 <div class="flex items-center">
                     <span 
                 class="cursor-pointer" 
-                    [routerLink]="['/contact-detail',item.id]">{{item.prenom}} {{item.nom}}</span>
+                    [routerLink]="['/contact-detail',item.id]">{{item.prenom}} <b>{{item.nom}}</b> </span>
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_horiz</mat-icon>
                     </button>  
-                    <mat-menu #menu>
+                    <mat-menu #menu> <!--like get element by id-->
                         <button mat-menu-item (click)="onDelete(item.id)">Supprimer</button>
+                        <button mat-menu-item (click)="sendEmail(item.email)">Envoyer Email</button>
                     </mat-menu>                   
-                </div>      
+                </div> 
+
             </mat-list-item>
+            <mat-divider></mat-divider>
             }
+            
         </mat-list>
     </div>
     <div class="text-center text-gray-500 pb-2">
