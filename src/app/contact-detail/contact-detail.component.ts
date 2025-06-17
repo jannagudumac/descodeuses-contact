@@ -12,6 +12,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatButton} from '@angular/material/button';
+
+import {MatCardModule} from '@angular/material/card';
+
+
 
 @Component({
   selector: 'app-contact-detail',
@@ -28,6 +33,8 @@ import { ReactiveFormsModule } from '@angular/forms';
       MatSnackBarModule,
       MatSelectModule,
       ReactiveFormsModule,
+      MatButtonModule,
+      MatCardModule
     ],
   templateUrl: './contact-detail.component.html',
   styleUrl: './contact-detail.component.css'

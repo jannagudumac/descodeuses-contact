@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+
 
 @Injectable({ providedIn: 'root' })
 export class InMemoryDataService {
@@ -34,8 +34,10 @@ export class InMemoryDataService {
     },
   ];
 
-  getContacts(): Observable<any[]> {
-    return of(this.listeContact);
-  }
+getContacts(): any[] {
+  return this.listeContact;
+}
+
+
 }
 

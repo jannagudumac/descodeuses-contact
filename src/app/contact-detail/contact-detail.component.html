@@ -1,11 +1,14 @@
-<div
-  id="full-cover-background"
-  class="flex h-full items-center justify-left"
->
-  <div id="block" class="flex-col p-7 rounded-2xl" >
-    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-      <h2 class="text-center">Contact</h2>
-      <div id="name-container" >
+<div id="full-cover-background" class="flex h-full items-center justify-left">
+  <div id="block" class="flex-col p-7 rounded-2xl">
+    <mat-card-header>
+      <mat-card-title>Edit contact</mat-card-title>
+    </mat-card-header>
+    <form
+      [formGroup]="contactForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-4 mt-5"
+    >
+      <div id="name-container">
         <mat-form-field class="w-full">
           <mat-label>Name</mat-label>
           <input
@@ -16,6 +19,11 @@
           />
         </mat-form-field>
       </div>
+      <mat-card-actions>
+        <button mat-raised-button type="submit">Save</button>
+        <button mat-button>Cancel</button>
+      </mat-card-actions>
+
       <div id="surname-container">
         <mat-form-field class="w-full">
           <mat-label>Surname</mat-label>
@@ -27,7 +35,7 @@
           />
         </mat-form-field>
       </div>
-      <div id="username-container" >
+      <div id="username-container">
         <mat-form-field class="w-full">
           <mat-label>Username</mat-label>
           <input
@@ -49,9 +57,9 @@
           />
         </mat-form-field>
       </div>
-    <div class="rounded">
-        <img src="assets/propic1.PNG">
-    </div>
+      <div class="rounded">
+        <img src="assets/propic1.PNG" />
+      </div>
       <button mat-flat-button type="submit" class="w-full">Save</button>
     </form>
   </div>

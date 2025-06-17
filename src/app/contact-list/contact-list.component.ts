@@ -57,19 +57,19 @@ export class ContactListComponent implements OnInit {
   // C:
   //Afficher le nombre de contactes au bas de la page
 
-  constructor(
+  constructor( //when there's a class
     private dataService: InMemoryDataService,
     private dialog: MatDialog,
-    private http: HttpClient
+    
   ) {}
 
   ngOnInit() {
-    this.dataService.getContacts().subscribe(contacts => {
-      this.listeContact = contacts;
-      this.countContacts = contacts.length; // 
-      this.onSearch(); // 
-    });
+    const contacts = this.dataService.getContacts();
+    this.listeContact = contacts;
+    this.countContacts = contacts.length;
+    this.onSearch();
   }
+  
 
   sendEmail(email: string): void {
     window.location.href = 'mailto:' + email;
@@ -122,7 +122,7 @@ export class ContactListComponent implements OnInit {
 
   onDelete(id: number) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result : boolean)=> {
       if (result === true) {
         console.log('L\'utilisateur a confirmé');
         const index = this.listeContact.findIndex(item=>item.id==id)
