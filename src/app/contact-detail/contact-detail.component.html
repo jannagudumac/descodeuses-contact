@@ -1,1 +1,58 @@
-<p>contact-detail works!</p>
+<div
+  id="full-cover-background"
+  class="flex h-full items-center justify-left"
+>
+  <div id="block" class="flex-col p-7 rounded-2xl" >
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <h2 class="text-center">Contact</h2>
+      <div id="name-container" >
+        <mat-form-field class="w-full">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            type="text"
+            placeholder="Name"
+          />
+        </mat-form-field>
+      </div>
+      <div id="surname-container">
+        <mat-form-field class="w-full">
+          <mat-label>Surname</mat-label>
+          <input
+            matInput
+            formControlName="surname"
+            type="text"
+            placeholder="Surname"
+          />
+        </mat-form-field>
+      </div>
+      <div id="username-container" >
+        <mat-form-field class="w-full">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            type="text"
+            placeholder="Username"
+          />
+        </mat-form-field>
+      </div>
+      <div id="email-container">
+        <mat-form-field class="w-full">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="Email"
+          />
+        </mat-form-field>
+      </div>
+    <div class="rounded">
+        <img src="assets/propic1.PNG">
+    </div>
+      <button mat-flat-button type="submit" class="w-full">Save</button>
+    </form>
+  </div>
+</div>
