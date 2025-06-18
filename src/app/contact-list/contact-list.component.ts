@@ -15,6 +15,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { ContactService } from '../services/contact.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { Contact } from '../models/contact.model';
 
 
 registerLocaleData(localeFr);
@@ -43,7 +44,7 @@ registerLocaleData(localeFr);
   styleUrls: ['./contact-list.component.css'] 
 })
 export class ContactListComponent implements OnInit {
-  listeContact: any[] = [];
+  listeContact: Contact[] = [];
   //A:
   //Creer variable tableau "listeContact"
   //Qui contient deux contactes moi et ma camarade
@@ -89,7 +90,7 @@ export class ContactListComponent implements OnInit {
     this.listeContactFiltre = [];
 
     for (let element of this.listeContact.sort((a, b) =>
-      a.surname.localeCompare(b.surname)
+      (a.surname ?? '').localeCompare(b.surname ?? '')
     )) {
       //console.log(this.textRecherche);
 
@@ -119,8 +120,8 @@ export class ContactListComponent implements OnInit {
       //pas acces à l'indexe
 
       if (
-        element.name.toLowerCase().startsWith(recherche) ||
-        element.surname.toLowerCase().startsWith(recherche)
+        (element.name ?? '').toLowerCase().startsWith(recherche) ||
+        (element.surname ?? '').toLowerCase().startsWith(recherche)
       ) {
         this.listeContactFiltre.push(element);
       }
