@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 
 
 @Injectable({ providedIn: 'root' })
-export class InMemoryDataService {
-  private listeContact = [
+export class InMemoryDataService implements InMemoryDataService {
+  constructor(){}
+  createDb() {
+    const contacts : any = [
     {
       id: 7,
       prenom: 'Bob',
@@ -34,10 +36,9 @@ export class InMemoryDataService {
     },
   ];
 
-getContacts(): any[] {
-  return this.listeContact;
+  return { contacts };
+  }
+  
+
 }
-
-
-}
-
+*/

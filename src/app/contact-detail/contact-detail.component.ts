@@ -9,52 +9,71 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterModule } from '@angular/router';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatButton} from '@angular/material/button';
-
-import {MatCardModule} from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { ContactService } from '../services/contact.service';
+import { Contact } from '../models/contact.model';
 
 
 
 @Component({
   selector: 'app-contact-detail',
-    imports: [
-      MatListModule,
-      RouterModule,
-      MatInputModule,
-      MatFormFieldModule,
-      FormsModule, //Necessaire pour la directive ngModel (template driven form)
-      MatIconModule,
-      MatButtonModule,
-      CommonModule, MatMenuModule,
-      MatDividerModule,
-      MatSnackBarModule,
-      MatSelectModule,
-      ReactiveFormsModule,
-      MatButtonModule,
-      MatCardModule
-    ],
+  imports: [
+    MatListModule,
+
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule, //Necessaire pour la directive ngModel (template driven form)
+    MatIconModule,
+    MatButtonModule,
+    CommonModule, MatMenuModule,
+    MatDividerModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+
+  ],
   templateUrl: './contact-detail.component.html',
   styleUrl: './contact-detail.component.css'
 })
-export class ContactDetailComponent implements OnInit{
-  contactForm! : FormGroup;
-  constructor(private formBuilder : FormBuilder){
-    
+export class ContactDetailComponent implements OnInit {
+  contact!: Contact;
+  contactForm!: FormGroup;
+  constructor(private formBuilder: FormBuilder,
+    private service: ContactService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+
   }
   ngOnInit(): void {
-    this.contactForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      surname: ['', [Validators.required]],
-      username: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-    })
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.service.getContact(id).subscribe(data => {
+      this.contact = data;
+      this.contactForm = this.formBuilder.group({
+        id: [this.contact.id],
+        surname: [this.contact.surname, [Validators.required]],
+        name: [this.contact.name, [Validators.required]],
+        email: [this.contact.email, [Validators.required, Validators.email]],
+        tel: [this.contact.tel, [Validators.required, Validators.pattern('^[0-9]+$')]],
+        propic: [this.contact.propic, [Validators.required]],
+        
+      })
+    });
+
+
   }
-  onSubmit(){
-    if (this.contactForm.valid){
+  onSubmit() {
+    if (this.contactForm.valid) {
       console.log(this.contactForm.value);
     }
+  };
+    onCancel() {
+    this.router.navigate(['/']);
   }
 }

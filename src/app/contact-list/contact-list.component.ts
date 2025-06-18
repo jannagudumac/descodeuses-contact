@@ -10,10 +10,14 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { InMemoryDataService } from '../services/in-memory-data.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { HttpClient } from '@angular/common/http';
+import { ContactService } from '../services/contact.service';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+
+registerLocaleData(localeFr);
 
 @Component({
   selector: 'app-contact-list',
@@ -31,7 +35,10 @@ import { HttpClient } from '@angular/common/http';
     MatDividerModule,
     MatSnackBarModule,
     MatDialogModule,
+  
+    
   ],
+
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css'] 
 })
@@ -58,16 +65,16 @@ export class ContactListComponent implements OnInit {
   //Afficher le nombre de contactes au bas de la page
 
   constructor( //when there's a class
-    private dataService: InMemoryDataService,
     private dialog: MatDialog,
-    
+    private service: ContactService
   ) {}
 
   ngOnInit() {
-    const contacts = this.dataService.getContacts();
-    this.listeContact = contacts;
-    this.countContacts = contacts.length;
-    this.onSearch();
+    this.service.getContacts().subscribe(contacts => {
+      this.listeContact = contacts;
+      this.countContacts = contacts.length;
+      this.onSearch();
+    });
   }
   
 
@@ -82,7 +89,7 @@ export class ContactListComponent implements OnInit {
     this.listeContactFiltre = [];
 
     for (let element of this.listeContact.sort((a, b) =>
-      a.prenom.localeCompare(b.prenom)
+      a.surname.localeCompare(b.surname)
     )) {
       //console.log(this.textRecherche);
 
@@ -112,8 +119,8 @@ export class ContactListComponent implements OnInit {
       //pas acces à l'indexe
 
       if (
-        element.nom.toLowerCase().startsWith(recherche) ||
-        element.prenom.toLowerCase().startsWith(recherche)
+        element.name.toLowerCase().startsWith(recherche) ||
+        element.surname.toLowerCase().startsWith(recherche)
       ) {
         this.listeContactFiltre.push(element);
       }
@@ -138,3 +145,4 @@ export class ContactListComponent implements OnInit {
 
 
 }
+

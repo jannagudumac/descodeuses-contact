@@ -1,13 +1,21 @@
+@if(contactForm !=null){
 <div id="full-cover-background" class="flex h-full items-center justify-left">
   <div id="block" class="flex-col p-7 rounded-2xl">
-    <mat-card-header>
-      <mat-card-title>Edit contact</mat-card-title>
+    <mat-card-header class="flex flex-col items-center">
+      <mat-card-title class="text-lg">Edit contact</mat-card-title>
     </mat-card-header>
     <form
       [formGroup]="contactForm"
       (ngSubmit)="onSubmit()"
-      class="flex flex-col gap-4 mt-5"
+      class="flex flex-col gap-4 mt-5 items-center "
     >
+      <div id="propic-container" class="w-32 h-32 mb-4 overflow-hidden rounded-full flex items-center justify-center">
+        <img
+          class="w-full h-full object-cover rounded-full"
+          [src]="contactForm.get('propic')?.value || 'assets/default.png'"
+          alt="Profile picture"
+        />
+      </div>
       <div id="name-container">
         <mat-form-field class="w-full">
           <mat-label>Name</mat-label>
@@ -19,10 +27,6 @@
           />
         </mat-form-field>
       </div>
-      <mat-card-actions>
-        <button mat-raised-button type="submit">Save</button>
-        <button mat-button>Cancel</button>
-      </mat-card-actions>
 
       <div id="surname-container">
         <mat-form-field class="w-full">
@@ -32,17 +36,6 @@
             formControlName="surname"
             type="text"
             placeholder="Surname"
-          />
-        </mat-form-field>
-      </div>
-      <div id="username-container">
-        <mat-form-field class="w-full">
-          <mat-label>Username</mat-label>
-          <input
-            matInput
-            formControlName="username"
-            type="text"
-            placeholder="Username"
           />
         </mat-form-field>
       </div>
@@ -57,10 +50,23 @@
           />
         </mat-form-field>
       </div>
-      <div class="rounded">
-        <img src="assets/propic1.PNG" />
+      <div id="tel-container">
+        <mat-form-field class="w-full">
+          <label>Telephone</label>
+          <input
+            matInput
+            formControlName="tel"
+            type="tel"
+            placeholder="Phone number"
+          />
+        </mat-form-field>
       </div>
-      <button mat-flat-button type="submit" class="w-full">Save</button>
+
+      <mat-card-actions>
+        <button mat-raised-button type="submit">Save</button>
+        <button mat-button (click)="onCancel()">Cancel</button>
+      </mat-card-actions>
     </form>
   </div>
 </div>
+}
