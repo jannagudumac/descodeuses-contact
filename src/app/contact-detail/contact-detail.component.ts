@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
@@ -48,6 +48,7 @@ export class ContactDetailComponent implements OnInit {
     private service: ContactService,
     private route: ActivatedRoute,
     private router: Router,
+    private snackbar: MatSnackBar 
   ) {
 
   }
@@ -70,6 +71,10 @@ export class ContactDetailComponent implements OnInit {
   }
   onSubmit() {
     if (this.contactForm.valid) {
+      this.service.updateContact(this.contactForm.value).subscribe(data => {
+        this.snackbar.open('Contact updated!', '', {duration: 1000});
+        this.router.navigate(['/']);
+      })
       console.log(this.contactForm.value);
     }
   };

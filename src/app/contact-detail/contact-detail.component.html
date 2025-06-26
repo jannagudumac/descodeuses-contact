@@ -12,7 +12,7 @@
       <div id="propic-container" class="w-32 h-32 mb-4 overflow-hidden rounded-full flex items-center justify-center">
         <img
           class="w-full h-full object-cover rounded-full"
-          [src]="contactForm.get('propic')?.value || 'assets/default.png'"
+          [src]="contact.propic"
           alt="Profile picture"
         />
       </div>
@@ -52,7 +52,7 @@
       </div>
       <div id="tel-container">
         <mat-form-field class="w-full">
-          <label>Telephone</label>
+          <mat-label>Telephone</mat-label>
           <input
             matInput
             formControlName="tel"
