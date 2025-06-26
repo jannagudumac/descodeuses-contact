@@ -21,6 +21,7 @@ import { Contact } from '../models/contact.model';
 
 @Component({
   selector: 'app-contact-detail',
+  standalone: true,
   imports: [
     MatListModule,
 
@@ -48,14 +49,34 @@ export class ContactDetailComponent implements OnInit {
     private service: ContactService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackbar: MatSnackBar 
+    private snackbar: MatSnackBar
   ) {
 
   }
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.service.getContact(id).subscribe(data => {
-      this.contact = data;
+    if (id > 0) {
+      this.service.getContact(id).subscribe(data => {
+        this.contact = data;
+        this.contactForm = this.formBuilder.group({
+          id: [this.contact.id],
+          surname: [this.contact.surname, [Validators.required]],
+          name: [this.contact.name, [Validators.required]],
+          email: [this.contact.email, [Validators.required, Validators.email]],
+          tel: [this.contact.tel, [Validators.required, Validators.pattern('^[0-9]+$')]],
+          propic: [this.contact.propic, [Validators.required]],
+ 
+        })
+      });
+    } else {
+      this.contact = {
+        id: null,
+        surname: '',
+        name: '',
+        email: '',
+        tel: '',
+        propic: '/assets/placeholder.png'
+      };
       this.contactForm = this.formBuilder.group({
         id: [this.contact.id],
         surname: [this.contact.surname, [Validators.required]],
@@ -63,22 +84,29 @@ export class ContactDetailComponent implements OnInit {
         email: [this.contact.email, [Validators.required, Validators.email]],
         tel: [this.contact.tel, [Validators.required, Validators.pattern('^[0-9]+$')]],
         propic: [this.contact.propic, [Validators.required]],
-        
+
       })
-    });
+    }
+
 
 
   }
   onSubmit() {
     if (this.contactForm.valid) {
-      this.service.updateContact(this.contactForm.value).subscribe(data => {
-        this.snackbar.open('Contact updated!', '', {duration: 1000});
-        this.router.navigate(['/']);
-      })
-      console.log(this.contactForm.value);
+      if (this.contact && this.contact.id != null && this.contact.id > 0) {
+        this.service.updateContact(this.contactForm.value).subscribe((data) => {
+          this.snackbar.open('Contact updated!', '', { duration: 1000 });
+          this.router.navigate(['/']);
+        });
+      } else {
+        this.service.addContact(this.contactForm.value).subscribe((data) => {
+          this.snackbar.open('Contact added!', '', { duration: 1000 });
+          this.router.navigate(['/']);
+        });
+      }
     }
   };
-    onCancel() {
+  onCancel() {
     this.router.navigate(['/']);
   }
 }

@@ -10,5 +10,8 @@ export const routes: Routes = [
     },
     {
         path:'contact-detail/:id', component: ContactDetailComponent, title: 'Contact Detail'
+    },
+     {
+        path:'contact-detail', component: ContactDetailComponent, title: 'Contact Detail'
     }
 ];
