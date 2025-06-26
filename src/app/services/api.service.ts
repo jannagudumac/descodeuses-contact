@@ -26,8 +26,8 @@ listeContact : Contact[] = [
     {
       id: 5,
       surname: 'Simo',
-      name: 'Bernardo',
-      email: 'sbernardo@gmail',
+      name: 'Patatino',
+      email: 'spatatino@gmail',
       propic: 'assets/propic4.PNG',
       tel: '0037356789',
     },
